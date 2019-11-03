@@ -21,7 +21,12 @@ class HomeViewModel : ViewModel() {
     }
 
     fun setAcc(a : Double) {
-        _acc.postValue(a)
+        if(a > _acc.value?:0.0)
+            _acc.postValue(a)
+    }
+
+    fun resetAcc() {
+        _acc.postValue(0.0)
     }
 
 }

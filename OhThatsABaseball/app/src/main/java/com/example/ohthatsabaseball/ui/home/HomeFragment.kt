@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.ohthatsabaseball.R
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlin.math.roundToInt
 
 class HomeFragment : Fragment(), SensorEventListener {
 
@@ -32,9 +34,10 @@ class HomeFragment : Fragment(), SensorEventListener {
         homeViewModel =
             ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val textView: TextView = root.findViewById(R.id.text_home)
+        val textView: TextView = root.findViewById(R.id.ohthatsabaseball)
         homeViewModel.observeAcc().observe(this, Observer {
-            textView.text = it.toString() + " m/s^2"
+            val it2 = (it * 10000).roundToInt().toDouble() / 10000
+            textView.text = "Top Speed: "+it2.toString() + " m/s^2"
         })
 
         sensorManager = activity?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -53,6 +56,8 @@ class HomeFragment : Fragment(), SensorEventListener {
             Toast.makeText(context, "NO ACCELEROMETER :(", Toast.LENGTH_LONG).show()
         }
 
+
+
         return root
     }
 
@@ -70,6 +75,7 @@ class HomeFragment : Fragment(), SensorEventListener {
                     event.values[1] * event.values[1] +
                     event.values[2] * event.values[2]).toDouble())
         Log.i("totalA", totalA.toString())
+
         homeViewModel.setAcc(totalA)
     }
 
@@ -83,5 +89,13 @@ class HomeFragment : Fragment(), SensorEventListener {
     override fun onPause() {
         super.onPause()
         sensorManager.unregisterListener(this)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        // XXX Write me.  get viewModel, observe something
+        baseball.setOnClickListener {
+            homeViewModel.resetAcc()
+        }
     }
 }
