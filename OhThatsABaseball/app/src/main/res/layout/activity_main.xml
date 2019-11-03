@@ -25,6 +25,17 @@
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/OhThatsABaseball"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-54dp" />
+        tools:layout_editor_absoluteY="16dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_formatted_name"
+        android:textColor="@android:color/black"
+        android:textSize="36sp"
+        app:fontFamily="casual"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        tools:layout_editor_absoluteX="31dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
